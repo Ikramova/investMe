@@ -18,6 +18,7 @@
 		2A4A2B5128434ED6001D1D63 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4A2B5028434ED6001D1D63 /* MainView.swift */; };
 		2A4A2B53284354EF001D1D63 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4A2B52284354EF001D1D63 /* CardView.swift */; };
 		2A4A2B5528435804001D1D63 /* aziza.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 2A4A2B5428435804001D1D63 /* aziza.MOV */; };
+		2A4A2B57284378A0001D1D63 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4A2B56284378A0001D1D63 /* Extensions.swift */; };
 		879304608D2A752B3166D491 /* Pods_Invest_me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E78485B7B8754DE921E8B859 /* Pods_Invest_me.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		2A4A2B5028434ED6001D1D63 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2A4A2B52284354EF001D1D63 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		2A4A2B5428435804001D1D63 /* aziza.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = aziza.MOV; sourceTree = "<group>"; };
+		2A4A2B56284378A0001D1D63 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4493B1707E021A276AF7965F /* Pods-Invest me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Invest me.release.xcconfig"; path = "Target Support Files/Pods-Invest me/Pods-Invest me.release.xcconfig"; sourceTree = "<group>"; };
 		A2E091690D74FEEA6E97101D /* Pods-Invest me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Invest me.debug.xcconfig"; path = "Target Support Files/Pods-Invest me/Pods-Invest me.debug.xcconfig"; sourceTree = "<group>"; };
 		E78485B7B8754DE921E8B859 /* Pods_Invest_me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Invest_me.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +78,7 @@
 				2A4A2B38284347B0001D1D63 /* ContentView.swift */,
 				2A4A2B4428434921001D1D63 /* Verification.swift */,
 				2A4A2B5028434ED6001D1D63 /* MainView.swift */,
+				2A4A2B56284378A0001D1D63 /* Extensions.swift */,
 				2A4A2B52284354EF001D1D63 /* CardView.swift */,
 				2A4A2B4828434A64001D1D63 /* InvestorView.swift */,
 				2A4A2B4628434A4F001D1D63 /* SomeView.swift */,
@@ -101,7 +104,6 @@
 				A2E091690D74FEEA6E97101D /* Pods-Invest me.debug.xcconfig */,
 				4493B1707E021A276AF7965F /* Pods-Invest me.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -232,6 +234,7 @@
 				2A4A2B53284354EF001D1D63 /* CardView.swift in Sources */,
 				2A4A2B4728434A4F001D1D63 /* SomeView.swift in Sources */,
 				2A4A2B5128434ED6001D1D63 /* MainView.swift in Sources */,
+				2A4A2B57284378A0001D1D63 /* Extensions.swift in Sources */,
 				2A4A2B4528434921001D1D63 /* Verification.swift in Sources */,
 				2A4A2B39284347B0001D1D63 /* ContentView.swift in Sources */,
 				2A4A2B37284347B0001D1D63 /* Invest_meApp.swift in Sources */,

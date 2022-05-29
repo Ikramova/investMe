@@ -19,6 +19,9 @@ struct MainView: View {
                            "LRgsIWi-5FI",
                            "4DloH-WS2Vs",
                             "8mowEvRCVRg"]
+    @State var searchText = ""
+    
+    @State var showCancelButton = false
     @State var isVerification = false
     @State var selection = 0
     
@@ -34,6 +37,10 @@ struct MainView: View {
     var body: some View {
         VStack
         {
+            
+          
+            self.searchBar
+            
             self.scroll
             
             self.title
@@ -50,6 +57,7 @@ struct MainView: View {
             
             
         }.navigationTitle("Main View")
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -65,6 +73,42 @@ struct MainView_Previews: PreviewProvider {
 
 extension MainView
 {
+    var searchBar: some View
+    {
+        HStack {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                
+                                TextField("search", text: $searchText, onEditingChanged: { isEditing in
+                                    self.showCancelButton = true
+                                }, onCommit: {
+                                    print("onCommit")
+                                }).foregroundColor(.primary)
+                                
+                                Button(action: {
+                                    self.searchText = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill").opacity(searchText == "" ? 0 : 1)
+                                }
+                            }
+                            .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+                            .foregroundColor(.secondary)
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(10.0)
+                            
+                            if showCancelButton  {
+                                Button("Cancel") {
+                                        UIApplication.shared.endEditing(true) // this must be placed before the other commands here
+                                        self.searchText = ""
+                                        self.showCancelButton = false
+                                }
+                                .foregroundColor(Color(.systemBlue))
+                            }
+                        }
+                        .padding(.horizontal)
+                        .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
+    }
+    
     var scroll: some View
     {
         ScrollView(.horizontal)
@@ -74,6 +118,11 @@ extension MainView
                 ForEach(0..<array.count, id: \.self) {index in
                     Button(action: {
                         self.selection = index
+                        if index == 1
+                        {
+                            self.videoIds.removeLast(3)
+                            self.titles.removeLast(3)
+                        }
                     }) {
                         Text(array[index])
                             .frame(width: 100, height: 50)
@@ -103,11 +152,12 @@ extension MainView
     {
         VStack
         {
+           
             ScrollView
             {
                 VStack
                 {
-                    ForEach(0..<5) { index in
+                    ForEach(0..<self.videoIds.count) { index in
                         VStack
                         {
                             VideoView(videoId: self.videoIds[index])
@@ -190,6 +240,7 @@ extension MainView
                     
                 }
             }
+            .resignKeyboardOnDragGesture()
         }
     }
 }
