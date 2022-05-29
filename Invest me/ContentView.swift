@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import AVKit
+import AVFoundation
+import UIKit
+
 
 struct ContentView: View {
-    @State var open = false
-    var body: some View {
+    @State var videoPlayer = AVPlayer()
+       
+    var body: some View
+    {
        MainView()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+
