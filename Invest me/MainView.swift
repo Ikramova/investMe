@@ -8,17 +8,27 @@
 import SwiftUI
 import AVKit
 import AVFoundation
+import youtube_ios_player_helper
 
 struct MainView: View {
     var array = ["All","Bussines","Technology","Social"]
     var firstVideoUrl = Bundle.main.path(forResource: "aziza", ofType:"MOV")
     @State var isLiked = [false, false, false, false, false]
+    @State var videoIds = ["q-Q2bsAOEhw",
+                           "Q2bsAOEhw",
+                           "LRgsIWi-5FI",
+                           "4DloH-WS2Vs",
+                            "8mowEvRCVRg"]
+    @State var isVerification = false
+    @State var selection = 0
+    
+    
     @State var titles = [
-        "klsdmckldsmlkcmdsklmc as;lmfldsc s;zknckldsc",
-        "sdlmfckld a;sldmcdsl;kmc las;m;ldsamc",
-        "dscmlsdkmc dsc laskzclksdmc lka.s,dxlks",
-        "sdlmclk aklsnclksam.cx paoslkdmxlkasmx",
-        ".sd,clks ioaslknc.kds,mc laskdm.askmzc"
+        "Bussines Startup",
+        "Establishment of an unusual training center",
+       "Ensuring that women make money sitting at home",
+        "Invest in Africa",
+        "Why you must invest to Africa"
         ]
     
     var body: some View {
@@ -31,7 +41,15 @@ struct MainView: View {
             self.video
             
             Spacer()
-        }
+            
+            
+            if isVerification
+            {
+                NavigationLink(destination: Verification(), isActive: $isVerification) {}
+            }
+            
+            
+        }.navigationTitle("Main View")
     }
 }
 
@@ -55,13 +73,14 @@ extension MainView
             {
                 ForEach(0..<array.count, id: \.self) {index in
                     Button(action: {
-                        
+                        self.selection = index
                     }) {
                         Text(array[index])
-                            .padding()
-                            .background(Color.blue)
+                            .frame(width: 100, height: 50)
+                            .background(self.selection == index ? .green : Color.blue)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
+                           
                     }
                 }
             }
@@ -91,13 +110,18 @@ extension MainView
                     ForEach(0..<5) { index in
                         VStack
                         {
-                        VideoView(videoUrl: self.firstVideoUrl ?? "")
-                            .frame(width: UIScreen.main.bounds.width - 40,
-                                   height: 200)
-                            
+                            VideoView(videoId: self.videoIds[index])
+                                .frame(width: UIScreen.main.bounds.width - 40, height: 270)
+                                .padding()
                             .overlay(
                                 Button(action:
                                 {
+                                    
+                                    if UserDefaults.standard.bool(forKey: "isVerification") == false
+                                    {
+                                        self.isVerification = true
+                                        return
+                                    }
                                     self.isLiked[index].toggle()
                                 })
                                 {
@@ -106,6 +130,7 @@ extension MainView
                                         .foregroundColor(self.isLiked[index] ? Color.red : Color.white)
                                         .frame(width: 35, height: 35)
                                         .padding(5)
+                                        .padding(.top, 15)
                                 }
                                 
                                 , alignment: .topTrailing)
@@ -171,70 +196,49 @@ extension MainView
 
 
 
-// MARK: USE UIKIT CLASS ON SWIFTUI
-struct VideoView: UIViewControllerRepresentable {
+
+
+struct VideoView: UIViewControllerRepresentable
+{
     
-    var url: String
-
-    init(videoUrl: String) {
-        self.url = videoUrl
+    let videoId: String
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context)
+    {
+        
     }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-
-    }
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        return VideoViewController(url: self.url)
+    
+    func makeUIViewController(context: Context) -> UIViewController
+    {
+        return YoutubeVideoPlayerViewController(videoId: videoId)
     }
 }
 
-class VideoViewController: UIViewController, AVPlayerViewControllerDelegate {
+
+
+class YoutubeVideoPlayerViewController: UIViewController
+{
+    var videoId: String
+    let youtubeView = YTPlayerView()
     
-    @Published var url: String
-    var statusVideo: StatusVideo = .pause
-    var player: AVPlayer?
-    var playerController = AVPlayerViewController()
-    var height = UIScreen.main.bounds.height
-    
-    init(url: String) {
-        self.url = url
+    init(videoId: String)
+    {
+        self.videoId = videoId
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override var shouldAutorotate: Bool {
-        return true
-    }
     
     override func viewDidLoad() {
-        let url = URL(fileURLWithPath: self.url)
         
-            self.player = AVPlayer(url: url)
-            self.playerController.delegate = self
-            self.playerController.player = self.player!
-            self.addChild(self.playerController)
-            self.view.addSubview(self.playerController.view)
-            
-       
-      
+        self.view.addSubview(youtubeView)
+        self.youtubeView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 20, height: 270)
+        self.youtubeView.layer.cornerRadius = 12
+        self.youtubeView.clipsToBounds = true
+        youtubeView.load(withVideoId: videoId)
+        
+        
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        player?.pause()
-    }
-    
-    deinit {
-        print("class VideoViewController is deinit")
-    }
-}
-
-
-enum StatusVideo
-{
-    case play
-    case pause
 }
