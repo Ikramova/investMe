@@ -14,6 +14,8 @@ struct MainView: View {
         {
             self.scroll
             
+            self.title
+            
             Spacer()
         }
     }
@@ -56,6 +58,8 @@ extension MainView
     
     var title: some View
     {
-        Text()
+        Text("From Peaople To People")
+            .font(.system(size: 20))
+            .padding(.top)
     }
 }
