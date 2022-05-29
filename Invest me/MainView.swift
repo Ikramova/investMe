@@ -14,11 +14,13 @@ struct MainView: View {
     var array = ["All","Bussines","Technology","Social"]
     var firstVideoUrl = Bundle.main.path(forResource: "aziza", ofType:"MOV")
     @State var isLiked = [false, false, false, false, false]
-    @State var videoIds = ["q-Q2bsAOEhw",
+    @State var videoIds = [ "LRgsIWi-5FI",
+                            "q-Q2bsAOEhw",
                            "Q2bsAOEhw",
-                           "LRgsIWi-5FI",
                            "4DloH-WS2Vs",
                             "8mowEvRCVRg"]
+    @State var selectedTitle: String = ""
+    @State var overview = false
     @State var searchText = ""
     
     @State var showCancelButton = false
@@ -33,6 +35,7 @@ struct MainView: View {
         "Invest in Africa",
         "Why you must invest to Africa"
         ]
+    @State var selectedVideoId = ""
     
     var body: some View {
         VStack
@@ -53,6 +56,11 @@ struct MainView: View {
             if isVerification
             {
                 NavigationLink(destination: Verification(), isActive: $isVerification) {}
+            }
+            
+            if overview
+            {
+                NavigationLink(destination: OverView(videoId: self.selectedVideoId, title: self.selectedTitle), isActive: $overview) {}
             }
             
             
@@ -109,6 +117,8 @@ extension MainView
                         .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
     }
     
+    
+    
     var scroll: some View
     {
         ScrollView(.horizontal)
@@ -133,7 +143,7 @@ extension MainView
                     }
                 }
             }
-        }
+        }.padding(.horizontal, 5)
     }
     
     
@@ -195,7 +205,12 @@ extension MainView
                             
                             Divider()
                             
-                            
+                            Button(action: {
+                                self.overview = true
+                                self.selectedVideoId = self.videoIds[index]
+                                self.selectedTitle = self.titles[index]
+                            })
+                            {
                             HStack
                             {
                                 Spacer()
@@ -230,7 +245,7 @@ extension MainView
                                 }
                                 Spacer()
                             }
-                            
+                            }
                         }.cornerRadius(12)
                            
                         
